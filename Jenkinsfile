@@ -49,7 +49,7 @@ pipeline {
             steps {
                 // /frontend is bind-mounted from the host (see jenkins/start).
                 sh '''
-                    cp app/build/outputs/apk/release/*.apk /frontend/deploy/
+                    cp app/build/outputs/apk/debug/*.apk /frontend/deploy/
                 '''
             }
         }
