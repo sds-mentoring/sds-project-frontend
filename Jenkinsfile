@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    triggers {
-        // Poll GitHub every 5 minutes for new commits.
-        // Replace with a GitHub webhook for instant triggering (see setup guide).
-        pollSCM('H/5 * * * *')
-    }
-
     environment {
         // Shared across builds via a volume mounted into the build container.
         ANDROID_SDK_ROOT = "${JENKINS_HOME}/.android-sdk"
@@ -55,7 +49,7 @@ pipeline {
             steps {
                 // /frontend is bind-mounted from the host (see jenkins/start).
                 sh '''
-                    cp app/build/outputs/apk/debug/*.apk /frontend/deploy/
+                    cp app/build/outputs/apk/release/*.apk /frontend/deploy/
                 '''
             }
         }
