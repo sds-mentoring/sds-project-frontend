@@ -57,6 +57,7 @@ sealed class AuthProvider(
         clientId = "mZgJxaEMILClmQ4Z9Z4n"
     )
 
+
     override fun toString(): String = when (this) {
         Naver -> "naver"
     }
