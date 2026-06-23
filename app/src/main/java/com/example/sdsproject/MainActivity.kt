@@ -313,7 +313,6 @@ fun ResponseDialog(body: String, isSuccess: Boolean, onClose: () -> Unit) {
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Response box
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -448,4 +447,3 @@ fun UserInfoCard(context: Context, userInfo: UserInfo) {
         }
     }
 }
-
