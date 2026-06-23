@@ -77,6 +77,7 @@ import com.example.sdsproject.ui.theme.SDSProjectTheme
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.launch
 import android.net.Uri
+import android.util.Log
 import okhttp3.HttpUrl
 
 class MainActivity : ComponentActivity() {
@@ -174,7 +175,7 @@ fun MainScreen(context: Context, onAuthorize: suspend (HttpUrl) -> Uri) {
             }
 
             is UiState.Authenticated -> {
-                UserInfoCard(currentState.userInfo)
+                UserInfoCard(context, currentState.userInfo)
             }
 
             is UiState.Loading -> {
@@ -386,7 +387,7 @@ fun ResponseDialog(body: String, isSuccess: Boolean, onClose: () -> Unit) {
 }
 
 @Composable
-fun UserInfoCard(userInfo: UserInfo) {
+fun UserInfoCard(context: Context, userInfo: UserInfo) {
     Box(contentAlignment = Alignment.Center) {
         ElevatedCard(
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -408,21 +409,18 @@ fun UserInfoCard(userInfo: UserInfo) {
                     verticalAlignment = Alignment.Top,
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    val context = LocalContext.current
-                    if (userInfo.profileImageUrl != null) {
-                        AsyncImage(
-                            model = ImageRequest.Builder(context)
-                                .data(userInfo.profileImageUrl)
-                                .build(),
-                            contentDescription = "Profile picture",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .aspectRatio(1f)
-                                .clip(CircleShape)
-                                .border(2.dp, Color.White.copy(alpha = 0.6f), CircleShape)
-                        )
-                    }
+                    AsyncImage(
+                        model = ImageRequest.Builder(context)
+                            .data(userInfo.profileImageUrl?.toString())
+                            .build(),
+                        contentDescription = "Profile picture",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .aspectRatio(1f)
+                            .clip(CircleShape)
+                            .border(2.dp, Color.White.copy(alpha = 0.6f), CircleShape)
+                    )
                     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                         Text(
                             text = userInfo.name,
